@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"github.com/ilyakaznacheev/cleanenv"
+	"github.com/joho/godotenv"
 	"log"
 	"os"
 )
@@ -14,6 +15,11 @@ type Config struct {
 }
 
 func MustLoad(pathToConfig string) *Config {
+	err := godotenv.Load("./.env")
+	if err != nil {
+		log.Printf("Error loading .env file")
+	}
+
 	if pathToConfig == "" {
 		log.Fatalf("Config file not specified")
 	}
