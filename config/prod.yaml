@@ -1,0 +1,2 @@
+env: "prod" # local , prod
+port: ":8080"
