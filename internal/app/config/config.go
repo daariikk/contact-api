@@ -10,7 +10,7 @@ import (
 
 type Config struct {
 	Env          string `yaml:"env" default:"prod"`
-	Port         string `yaml:"port" default:":8080"`
+	Port         string `yaml:"port" default:"8080"`
 	DBConnection string `yaml:"db_conn"`
 }
 
@@ -35,6 +35,7 @@ func MustLoad(pathToConfig string) *Config {
 		log.Fatalf("Error reading config: %s", err.Error())
 	}
 	cfg.DBConnection = getDBConnection("DB_USER", "DB_PASSWORD", cfg.DBConnection)
+	cfg.Port = os.Getenv("PORT")
 
 	return &cfg
 }
