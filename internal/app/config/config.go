@@ -35,7 +35,6 @@ func MustLoad(pathToConfig string) *Config {
 		log.Fatalf("Error reading config: %s", err.Error())
 	}
 	cfg.DBConnection = getDBConnection("DB_USER", "DB_PASSWORD", cfg.DBConnection)
-	cfg.Port = os.Getenv("PORT")
 
 	return &cfg
 }

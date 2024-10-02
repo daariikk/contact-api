@@ -1,6 +1,11 @@
+version: '3.8'
+
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: contact
     ports:
       - "8080:8080"
     environment:
@@ -19,10 +24,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: $DB_USER
       MONGO_INITDB_ROOT_PASSWORD: $DB_PASSWORD
-    networks:
-      - app-network
-    volumes:
-      - ./mongo_data:/data/db
 
   mongo-init-wait:
     image: appropriate/curl
