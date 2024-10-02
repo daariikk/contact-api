@@ -10,7 +10,7 @@ import (
 type Config struct {
 	Env          string `yaml:"env" default:"prod"`
 	Port         string `yaml:"port" default:":8080"`
-	DBConnection string `yaml:"db_conn" default:"mongodb://localhost:80/contact"`
+	DBConnection string `yaml:"db_conn"`
 }
 
 func MustLoad(pathToConfig string) *Config {
@@ -26,22 +26,25 @@ func MustLoad(pathToConfig string) *Config {
 	var cfg Config
 
 	if err := cleanenv.ReadConfig(pathToConfig, &cfg); err != nil {
-		log.Fatalf("err reading config: %s", err.Error())
+		log.Fatalf("Error reading config: %s", err.Error())
 	}
-	cfg.DBConnection = getDBConnection("DB_USER", "DB_PASSWORD", "DB_CONNECTION")
+	cfg.DBConnection = getDBConnection("DB_USER", "DB_PASSWORD", cfg.DBConnection)
 
 	return &cfg
 }
 
-func getDBConnection(user string, passwd string, defaultValue string) string {
-	User := os.Getenv(user)
-	Passwd := os.Getenv(passwd)
+func getDBConnection(userEnv string, passwdEnv string, defaultConn string) string {
+	user := os.Getenv(userEnv)
+	passwd := os.Getenv(passwdEnv)
 
-	if user == "" || Passwd == "" {
-		return os.Getenv(defaultValue)
+	if user == "" || passwd == "" {
+		if defaultConn != "" {
+			return defaultConn
+		}
+		log.Fatal("Database credentials are not set and no default connection string provided.")
 	}
 
-	res := fmt.Sprintf("mongodb://%s:%s@mongo:27017/contact?authSource=admin", User, Passwd)
+	res := fmt.Sprintf("mongodb://%s:%s@mongo:27017/contact?authSource=admin", user, passwd)
 
 	return res
 }
