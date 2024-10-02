@@ -28,6 +28,8 @@ COPY --from=builder /app/contact-api /app/contact-api
 # Копируем конфигурационные файлы
 COPY --from=builder /app/config /app/config
 
+#COPY --from=builder /app/.env ./.env
+
 # Открываем порт
 EXPOSE 8080
 

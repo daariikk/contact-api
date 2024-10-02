@@ -50,7 +50,7 @@ func getDBConnection(userEnv string, passwdEnv string, defaultConn string) strin
 		log.Fatal("Database credentials are not set and no default connection string provided.")
 	}
 
-	res := fmt.Sprintf("mongodb://%s:%s@mongodb:27017/contact?authSource=admin", user, passwd)
+	res := fmt.Sprintf("mongodb://%s:%s@mongo:27017/contact?authSource=admin", user, passwd)
 
 	return res
 }
