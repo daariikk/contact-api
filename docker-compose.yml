@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_CONNECTION=mongodb://$DB_USER:$DB_PASSWORD@mongo:27017/contact
+    depends_on:
+      - mongo
+      - mongo-init-wait
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: $DB_USER
+      MONGO_INITDB_ROOT_PASSWORD: $DB_PASSWORD
+    networks:
+      - app-network
+    volumes:
+      - ./mongo_data:/data/db
+
+  mongo-init-wait:
+    image: appropriate/curl
+    container_name: mongo-init-wait
+    entrypoint: ["sh", "-c", "until curl http://mongo:27017; do echo waiting for mongo; sleep 5; done;"]
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

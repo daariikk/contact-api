@@ -28,7 +28,7 @@ func MustLoad(pathToConfig string) *Config {
 	if err := cleanenv.ReadConfig(pathToConfig, &cfg); err != nil {
 		log.Fatalf("err reading config: %s", err.Error())
 	}
-	cfg.DBConnection = getDBConnection("MONGO_INITDB_ROOT_USERNAME", "MONGO_INITDB_ROOT_PASSWORD", "DB_CONNECTION")
+	cfg.DBConnection = getDBConnection("DB_USER", "DB_PASSWORD", "DB_CONNECTION")
 
 	return &cfg
 }
