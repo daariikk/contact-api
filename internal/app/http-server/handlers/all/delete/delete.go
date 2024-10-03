@@ -12,15 +12,6 @@ type ContactsDeleter interface {
 	DeleteAll() (int64, error)
 }
 
-// New создает обработчик HTTP для удаления всех контактов
-// @Summary Удалить все контакты
-// @Description Удаляет все контакты из базы данных
-// @Tags contacts
-// @Accept json
-// @Produce json
-// @Success 200 {string} string "Успешное удаление всех контактов"
-// @Failure 500 {object} server.ErrorResponse "Ошибка сервера"
-// @Router /v1/contact [delete]
 func New(log *slog.Logger, deleter ContactsDeleter) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const op = "handlers.all.delete.New"

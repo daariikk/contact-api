@@ -18,17 +18,6 @@ type RespOK struct {
 	MSG string `json:"msg"`
 }
 
-// New создает обработчик HTTP для сохранения контакта
-// @Summary Сохранить контакт
-// @Description Сохраняет новый контакт в базе данных
-// @Tags contacts
-// @Accept json
-// @Produce json
-// @Param contact body models.Contact true "Контакт для сохранения"
-// @Success 200 {object} RespOK "Успешное сохранение контакта"
-// @Failure 400 {object} server.ErrorResponse "Ошибка в запросе"
-// @Failure 500 {object} server.ErrorResponse "Ошибка сервера"
-// @Router /v1/contact [post]
 func New(log *slog.Logger, saver ContactSaver) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const op = "handlers.all.save.New"

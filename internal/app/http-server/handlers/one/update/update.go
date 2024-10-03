@@ -21,17 +21,6 @@ type Resp struct {
 	MSG string `json:"msg"`
 }
 
-// New создает обработчик HTTP для обновления контакта
-// @Summary Обновить контакт
-// @Description Обновляет существующий контакт в базе данных
-// @Tags contacts
-// @Accept json
-// @Produce json
-// @Param contact body models.Contact true "Контакт для обновления"
-// @Success 200 {object} Resp "Успешное обновление контакта"
-// @Failure 400 {object} server.ErrorResponse "Ошибка в запросе"
-// @Failure 500 {object} server.ErrorResponse "Ошибка сервера"
-// @Router /v1/contact/{uid} [put]
 func New(log *slog.Logger, updater Updater) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const op = "handlers.one.update.New"

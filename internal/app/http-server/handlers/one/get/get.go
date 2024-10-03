@@ -15,17 +15,6 @@ type GetterByID interface {
 	ContactById(id string) (models.Contact, error)
 }
 
-// New создает обработчик HTTP для получения контакта по ID
-// @Summary Получить контакт по ID
-// @Description Возвращает контакт из базы данных по указанному ID
-// @Tags contacts
-// @Accept json
-// @Produce json
-// @Param id body string true "ID контакта для получения"
-// @Success 200 {object} models.Contact "Успешное получение контакта"
-// @Failure 400 {object} server.ErrorResponse "Ошибка в запросе"
-// @Failure 500 {object} server.ErrorResponse "Ошибка сервера"
-// @Router /v1/contact/{uid} [get]
 func New(log *slog.Logger, getter GetterByID) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const op = "handlers.one.getOne.New"

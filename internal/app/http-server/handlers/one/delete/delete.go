@@ -19,17 +19,6 @@ type Resp struct {
 	MSG string `json:"msg"`
 }
 
-// New создает обработчик HTTP для удаления контакта по ID
-// @Summary Удалить контакт по ID
-// @Description Удаляет контакт из базы данных по указанному ID
-// @Tags contacts
-// @Accept json
-// @Produce json
-// @Param id body string true "ID контакта для удаления"
-// @Success 200 {object} Resp "Успешное удаление контакта"
-// @Failure 400 {object} server.ErrorResponse "Ошибка в запросе"
-// @Failure 500 {object} server.ErrorResponse "Ошибка сервера"
-// @Router /v1/contact/{uid} [delete]
 func New(log *slog.Logger, deleter DeleterByID) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const op = "handlers.one.delete.New"
